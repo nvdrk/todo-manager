@@ -33,7 +33,6 @@ dependencies:
   freezed: ^2.1.1
   json_serializable: ^6.5.1
   json_annotation: ^4.7.0
-  liquid_pull_to_refresh: ^3.0.1
   riverpod: ^2.4.1
   hooks_riverpod: ^2.4.1
   flutter:
