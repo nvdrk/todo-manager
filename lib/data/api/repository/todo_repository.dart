@@ -5,7 +5,7 @@ import 'package:todo_manager/data/api/entities/todo.dart';
 class TodoRepository extends HttpClientInterface {
   TodoRepository({required super.baseURL});
 
-  Future<List<Todo>> getBlogPosts() async {
+  Future<List<Todo>> getTodos() async {
     try {
       final response = await get<String>('todos');
       return todoFromJson(response.json);
@@ -16,10 +16,10 @@ class TodoRepository extends HttpClientInterface {
 }
 
   abstract class Dependency {
-  static Provider<TodoRepository> get postRepository => postRepo;
+  static Provider<TodoRepository> get todoRepository => todoRepo;
   }
 
-  final postRepo = Provider<TodoRepository>(
+  final todoRepo = Provider<TodoRepository>(
   (ref) => TodoRepository(baseURL: 'https://jsonplaceholder.typicode.com/'));
 
 

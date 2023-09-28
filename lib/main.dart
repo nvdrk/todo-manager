@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         useMaterial3: true,
-        primarySwatch: greyTint
+        primarySwatch: greyTint,
+        iconTheme: IconThemeData(color: greyTint.shade800)
       ),
       home: const ProviderScope(child: TodoList()),
     );
