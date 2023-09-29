@@ -33,7 +33,7 @@ class ItemListTile extends ConsumerWidget {
                   : const Icon(Icons.check_box_outline_blank_outlined),
               onPressed: () => ref
                   .read(todoNotifierProvider.notifier)
-                  .toggleCheckMArk(todo.id),
+                  .toggleCheckMark(todo.id),
             ),
           ),
         ),

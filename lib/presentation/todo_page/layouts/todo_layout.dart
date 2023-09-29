@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:todo_manager/application/colors.dart';
 import 'package:todo_manager/data/api/entities/todo.dart';
+import 'package:todo_manager/presentation/shared/app_bar.dart';
 import 'package:todo_manager/provider/todo_provider.dart';
 import 'package:todo_manager/presentation/shared/background_painter.dart';
 import 'package:todo_manager/presentation/todo_page/components/item_tile.dart';
@@ -47,41 +48,11 @@ class _DataLayoutState extends ConsumerState<TodoLayout> {
             CustomScrollView(
               controller: _controller,
               slivers: [
-                SliverAppBar(
-                  backgroundColor: greyTint.shade600,
-                  pinned: true,
-                  collapsedHeight: 60,
-                  shape: const ContinuousRectangleBorder(
-                      borderRadius:
-                          BorderRadius.vertical(bottom: Radius.circular(40))),
-                  title: Text(
-                    "Todo Manager",
-                    style: TextStyle(color: greyTint.shade50),
-                  ),
-                  actions: [
-                    IconButton(
-                      icon: const Icon(Icons.arrow_circle_down),
-                      onPressed: () => _controller.animateTo(
-                          _controller.position.maxScrollExtent,
-                          duration: const Duration(milliseconds: 1500),
-                          curve: Curves.fastOutSlowIn),
-                    ),
-                  ],
-                  expandedHeight: kToolbarHeight * 2.5,
-                  flexibleSpace: Padding(
-                    padding: const EdgeInsets.only(top: kToolbarHeight * 2),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 0, 16),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                              child: const Text("Add Todo"),
-                              onPressed: () => showDialogWithFields()),
-                        ],
-                      ),
-                    ),
-                  ),
+                TodoAppBar(
+                    title: 'TodoManager',
+                    controller: _controller,
+                    buttonOnPressed: () => _showDialogWithFields(),
+                    buttonText: 'Add Todo',
                 ),
                 SliverPadding(
                   padding: const EdgeInsets.only(bottom: 128),
@@ -123,7 +94,7 @@ class _DataLayoutState extends ConsumerState<TodoLayout> {
     );
   }
 
-  void showDialogWithFields() {
+  void _showDialogWithFields() {
     showDialog(
       context: context,
       builder: (_) {
@@ -136,7 +107,7 @@ class _DataLayoutState extends ConsumerState<TodoLayout> {
               TextFormField(
                 controller: textController,
                 decoration:
-                    const InputDecoration(hintText: 'What do you want to do?'),
+                    const InputDecoration(hintText: 'What would you like to do?'),
               ),
             ],
           ),

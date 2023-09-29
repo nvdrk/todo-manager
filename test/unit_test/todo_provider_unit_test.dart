@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_manager/data/api/entities/todo.dart';
@@ -61,7 +63,7 @@ void main() {
 
     final todoNotifier = container.read(todoNotifierProvider.notifier);
 
-    todoNotifier.toggleCheckMArk(1);
+    todoNotifier.toggleCheckMark(1);
 
     final todos = container.read(todoProvider);
 
@@ -71,5 +73,27 @@ void main() {
 
     container.dispose();
   });
-  
+
+  test('Remove Todo Successfully', () async {
+
+    final container = ProviderContainer(
+        overrides: [
+          todoProvider.overrideWith((ref) => [
+            const Todo(id: 1, title: 'Task 1', completed: false, userId: 0),
+            const Todo(id: 2, title: 'Task 2', completed: true, userId: 0),
+          ])
+        ]
+    );
+
+    final todoNotifier = container.read(todoNotifierProvider.notifier);
+
+    todoNotifier.removeTodo(2);
+
+    final todos = container.read(todoProvider);
+
+    expect(todos, isA<AsyncValue<List<Todo>>>());
+    expect(todos.value!.length, 1);
+
+    container.dispose();
+  });
 }

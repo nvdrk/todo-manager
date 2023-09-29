@@ -2,7 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_manager/data/api/repository/todo_repository.dart';
 import 'package:todo_manager/data/api/entities/todo.dart';
 
-final todoProvider = FutureProvider<List<Todo>>((ref) async {
+final todoProvider = AutoDisposeFutureProvider<List<Todo>>((ref) async {
   final todoList = await ref.read(Dependency.todoRepository).getTodos();
   return todoList;
 });
@@ -20,9 +20,10 @@ class TodoNotifier extends StateNotifier<AsyncValue<List<Todo>>> {
   final Ref ref;
 
   void loadTodos() async {
-    state = const AsyncLoading();
-    final todoList = ref.watch(todoProvider);
-    state = todoList;
+    final todoList = AsyncValue.guard(() {
+      return ref.read(todoProvider.future);
+    });
+    state = await todoList;
   }
 
   void addTodo(String text) async {
@@ -44,7 +45,7 @@ class TodoNotifier extends StateNotifier<AsyncValue<List<Todo>>> {
     state = AsyncData(todoList);
   }
 
-  void toggleCheckMArk(int id) async {
+  void toggleCheckMark(int id) async {
     final todoList = state.value!;
     final index = todoList.indexWhere((element) => element.id == id);
     final todo = todoList.where((element) => element.id == id).first;
