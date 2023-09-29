@@ -11,7 +11,7 @@ class ItemListTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Dismissible(
-      key: Key(todo.toString()),
+      key: Key(todo.id.toString()),
       onDismissed: (direction) =>
           ref.read(todoNotifierProvider.notifier).removeTodo(todo.id),
       child: Padding(
@@ -19,7 +19,12 @@ class ItemListTile extends ConsumerWidget {
         child: Card(
           child: ListTile(
             title: Text(
+              todo.id.toString(),
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            subtitle: Text(
               todo.title,
+              maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),
             trailing: IconButton(

@@ -67,21 +67,17 @@ class _DataLayoutState extends ConsumerState<TodoLayout> {
                           curve: Curves.fastOutSlowIn),
                     ),
                   ],
-                  expandedHeight: 120,
+                  expandedHeight: kToolbarHeight * 2.5,
                   flexibleSpace: Padding(
-                    padding: const EdgeInsets.only(top: 100),
+                    padding: const EdgeInsets.only(top: kToolbarHeight * 2),
                     child: Padding(
-                      padding: const EdgeInsets.all(4.0),
+                      padding: const EdgeInsets.fromLTRB(16, 0, 0, 16),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(left: 8.0, bottom: 8.0),
-                            child: ElevatedButton(
-                                child: const Text("Add Todo"),
-                                onPressed: () => showDialogWithFields()),
-                          ),
+                          ElevatedButton(
+                              child: const Text("Add Todo"),
+                              onPressed: () => showDialogWithFields()),
                         ],
                       ),
                     ),
@@ -92,9 +88,9 @@ class _DataLayoutState extends ConsumerState<TodoLayout> {
                   sliver: SliverFixedExtentList(
                     delegate: SliverChildBuilderDelegate(
                         childCount: widget.todos.length, (_, int index) {
-                      return ItemListTile(todo: widget.todos[index]);
+                      return ItemListTile(todo: widget.todos[index], key: UniqueKey(),);
                     }),
-                    itemExtent: 100,
+                    itemExtent: 120,
                   ),
                 )
               ],
