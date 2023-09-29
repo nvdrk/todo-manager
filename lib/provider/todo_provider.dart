@@ -2,8 +2,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_manager/data/api/repository/todo_repository.dart';
 import 'package:todo_manager/data/api/entities/todo.dart';
 
-final todoProvider = AutoDisposeFutureProvider<List<Todo>>((ref) async {
+final todoProvider = AutoDisposeFutureProvider((ref) async {
   final todoList = await ref.read(Dependency.todoRepository).getTodos();
+  return todoList;
+});
+
+/// Api takes userId as query param
+final todoProviderByUser = AutoDisposeFutureProvider.family<List<Todo>, int?>((ref, userId) async {
+  final todoList = await ref.read(Dependency.todoRepository).getTodos(userId);
   return todoList;
 });
 
@@ -26,11 +32,11 @@ class TodoNotifier extends StateNotifier<AsyncValue<List<Todo>>> {
     state = await todoList;
   }
 
-  void addTodo(String text) async {
+  void addTodo(String text, [int? userId]) async {
     final todoList = state.value ?? [];
     final lastId = state.value?.last.id ?? 0;
     final todo = Todo(
-      userId: state.value?.first.userId ?? 0,
+      userId: userId ?? 0,
       id: lastId + 1,
       title: text,
       completed: false,

@@ -39,7 +39,6 @@ void main() {
     final todoNotifier = container.read(todoNotifierProvider.notifier);
 
     todoNotifier.addTodo('Task 3');
-
     final todos = container.read(todoProvider);
 
     expect(todos, isA<AsyncValue<List<Todo>>>());
