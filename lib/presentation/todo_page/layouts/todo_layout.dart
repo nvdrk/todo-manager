@@ -19,23 +19,29 @@ class TodoLayout extends ConsumerStatefulWidget {
 
 class _DataLayoutState extends ConsumerState<TodoLayout> {
   late ScrollController _controller;
-  bool floatingButtonVisible = false;
+  bool _floatingButtonVisible = false;
 
   @override
   void initState() {
     super.initState();
     _controller = ScrollController();
     _controller.addListener(() {
-      if (_controller.offset > 0) {
+      if (_controller.offset > 10 && _floatingButtonVisible == false) {
         setState(() {
-          floatingButtonVisible = true;
+          _floatingButtonVisible = true;
         });
-      } else {
+      } else if (_controller.offset <= 10 && _floatingButtonVisible == true) {
         setState(() {
-          floatingButtonVisible = false;
+          _floatingButtonVisible = false;
         });
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -67,7 +73,7 @@ class _DataLayoutState extends ConsumerState<TodoLayout> {
               ],
             ),
             Visibility(
-              visible: floatingButtonVisible,
+              visible: _floatingButtonVisible,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Align(
