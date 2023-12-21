@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_manager/data/api/entities/todo.dart';
-import 'package:todo_manager/provider/todo_provider.dart';
+import 'package:todo_manager/presentation/todo_page/provider/todo_provider.dart';
 
 class ItemListTile extends ConsumerWidget {
   const ItemListTile({Key? key, required this.todo}) : super(key: key);

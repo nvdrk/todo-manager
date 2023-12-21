@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:todo_manager/application/colors.dart';
-import 'package:todo_manager/provider/todo_provider.dart';
+import 'package:todo_manager/presentation/todo_page/provider/todo_provider.dart';
 import 'app_bar.dart';
 import 'background_painter.dart';
 
