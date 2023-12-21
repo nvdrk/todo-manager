@@ -16,9 +16,9 @@ class TodoRepository extends HttpClientInterface {
   }
 }
 
-abstract class Dependency {
-  static Provider<TodoRepository> get todoRepository => todoRepo;
-}
-
-final todoRepo = Provider<TodoRepository>(
+final _todoRepo = Provider<TodoRepository>(
     (ref) => TodoRepository(baseURL: 'https://jsonplaceholder.typicode.com/'));
+
+abstract class Dependency {
+  static Provider<TodoRepository> get todoRepository => _todoRepo;
+}
