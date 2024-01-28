@@ -33,8 +33,7 @@ dependencies:
   freezed: ^2.1.1
   json_serializable: ^6.5.1
   json_annotation: ^4.7.0
-  riverpod: ^2.4.1
-  hooks_riverpod: ^2.4.1
+  flutter_riverpod: ^2.4.1
   flutter:
     sdk: flutter
 

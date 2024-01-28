@@ -1,4 +1,4 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:riverpod/riverpod.dart';
 import 'package:todo_manager/data/api/http_client.dart';
 import 'package:todo_manager/data/api/entities/todo.dart';
 
