@@ -54,17 +54,20 @@ class _DataLayoutState extends ConsumerState<TodoLayout> {
               controller: _controller,
               slivers: [
                 TodoAppBar(
-                    title: 'TodoManager',
-                    controller: _controller,
-                    buttonOnPressed: () => _showDialogWithFields(),
-                    buttonText: 'Add Todo',
+                  title: 'TodoManager',
+                  controller: _controller,
+                  buttonOnPressed: () => _showDialogWithFields(),
+                  buttonText: 'Add Todo',
                 ),
                 SliverPadding(
                   padding: const EdgeInsets.only(bottom: 128),
                   sliver: SliverFixedExtentList(
                     delegate: SliverChildBuilderDelegate(
                         childCount: widget.todos.length, (_, int index) {
-                      return ItemListTile(todo: widget.todos[index], key: UniqueKey(),);
+                      return ItemListTile(
+                        todo: widget.todos[index],
+                        key: UniqueKey(),
+                      );
                     }),
                     itemExtent: 120,
                   ),
@@ -111,8 +114,8 @@ class _DataLayoutState extends ConsumerState<TodoLayout> {
             children: [
               TextFormField(
                 controller: textController,
-                decoration:
-                    const InputDecoration(hintText: 'What would you like to do?'),
+                decoration: const InputDecoration(
+                    hintText: 'What would you like to do?'),
               ),
             ],
           ),
