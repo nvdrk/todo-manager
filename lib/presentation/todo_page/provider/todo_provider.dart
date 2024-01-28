@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_manager/data/api/repository/todo_repository.dart';
 import 'package:todo_manager/data/api/entities/todo.dart';
@@ -14,25 +16,11 @@ final todoProviderByUser = AutoDisposeFutureProvider.family<List<Todo>, int?>((r
 });
 
 final todoNotifierProvider =
-    StateNotifierProvider<TodoNotifier, AsyncValue<List<Todo>>>((ref) {
-  return TodoNotifier(ref);
-});
+    AsyncNotifierProvider<TodoNotifier, List<Todo>>((TodoNotifier.new));
 
-class TodoNotifier extends StateNotifier<AsyncValue<List<Todo>>> {
-  TodoNotifier(this.ref) : super(const AsyncLoading()) {
-    loadTodos();
-  }
+class TodoNotifier extends AsyncNotifier<List<Todo>> {
 
-  final Ref ref;
-
-  void loadTodos() async {
-    final todoList = AsyncValue.guard(() {
-      return ref.read(todoProvider.future);
-    });
-    state = await todoList;
-  }
-
-  void addTodo(String text, [int? userId]) async {
+  void addTodo(String text, [int? userId]) {
     final todoList = state.value ?? [];
     final lastId = state.value?.last.id ?? 0;
     final todo = Todo(
@@ -51,11 +39,16 @@ class TodoNotifier extends StateNotifier<AsyncValue<List<Todo>>> {
     state = AsyncData(todoList);
   }
 
-  void toggleCheckMark(int id) async {
+  void toggleCheckMark(int id) {
     final todoList = state.value!;
     final index = todoList.indexWhere((element) => element.id == id);
     final todo = todoList.where((element) => element.id == id).first;
     todoList[index] = todo.copyWith(completed: !todo.completed);
     state = AsyncData(todoList);
+  }
+
+  @override
+  FutureOr<List<Todo>> build() {
+    return ref.read(todoProvider.future);
   }
 }
